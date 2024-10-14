@@ -25,11 +25,7 @@
             <label for="image" class="form-label">Chọn hình ảnh mới</label>
             <input type="file" class="form-control" name="image" id="image">
         </div>
-        <div class="mb-3">
-            <label for="brand" class="form-label">Hãng sản phẩm</label>
-            <input type="text" class="form-control" name="brand" value="<?= isset($product_array_edit['brand']) ? $product_array_edit['brand'] : '' ?>" id="brand" placeholder="Nhập tên hãng sản phẩm ...">
-        </div>
         <button type="submit" class="btn btn-primary" name="submit">Sửa sản phẩm</button>
-        <a href="index.php" class="btn btn-secondary">Quay lại</a>
+        <a href="index.php?router=admin/product/listing" class="btn btn-secondary">Quay lại</a>
     </form>
 </div>

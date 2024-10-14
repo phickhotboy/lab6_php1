@@ -12,7 +12,11 @@
 
 <body>
     <div class="container">
+        <div class="text-end mb-2">
+            <a href="index.php?router=login"><button class="btn btn-primary">Login</button></a>
+        </div>
         <h1 class="text-center">Trang sản phẩm</h1>
+
         <div class="row">
             <?php
             foreach ($ArrProduct as $index => $row) {

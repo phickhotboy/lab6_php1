@@ -10,21 +10,21 @@ class Product
         $result = $stmt->fetchAll(); //Lấy ra kết quả dạng mảng
         return $result;
     }
-    public function store($name = "", $price = "", $description = "", $content = "", $image = "", $brand = "")
+    public function store($name = "", $price = "", $description = "", $content = "", $image = "", $category_id = "")
 {
-    include('Connect.php');
+    include('Connect.php'); 
     $message = "";
 
     if ($name != "") {
         // Câu truy vấn chuẩn bị sẵn
-        $sql = "INSERT INTO products (name, price, description, content, image, brand) 
+        $sql = "INSERT INTO products (name, price, description, content, image, category_id) 
                 VALUES (?, ?, ?, ?, ?, ?)";
 
         // Nạp câu truy vấn với các giá trị placeholder
         $stmt = $conn->prepare($sql);
 
         // Thực thi câu truy vấn với các tham số
-        $stmt->execute([$name, $price, $description, $content, $image, $brand]);
+        $stmt->execute([$name, $price, $description, $content, $image, $category_id]);
 
         // Không cần fetchAll() vì INSERT không trả về kết quả dạng bảng
         $message = 'Thêm thành công';
@@ -34,6 +34,7 @@ class Product
 
     return $message;
 }
+
 public function getProductID($id)
 {
     include('Connect.php');
@@ -47,7 +48,7 @@ public function getProductID($id)
     return $stmt->fetch();
 }
 
-public function update($id, $name, $price, $description, $content, $image, $brand)
+public function update($id, $name, $price, $description, $content, $image)
 {
     include('Connect.php');
 
@@ -55,7 +56,6 @@ public function update($id, $name, $price, $description, $content, $image, $bran
     $sql = "UPDATE products SET
         name = :name,
         price = :price,
-        brand = :brand,
         content = :content,
         description = :description,
         image = :image
@@ -68,15 +68,26 @@ public function update($id, $name, $price, $description, $content, $image, $bran
     $stmt->execute([
         ':name' => $name,
         ':price' => $price,
-        ':brand' => $brand,
         ':content' => $content,
         ':description' => $description,
         ':image' => $image,
         ':id' => $id
     ]);
 }
-
-
+public function delete($id)
+{
+    include('Connect.php');
+    
+    $sql = "DELETE FROM products WHERE id = :id";
+    $stmt = $conn->prepare($sql);
+    
+    try {
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
 
     
 }
